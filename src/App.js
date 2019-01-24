@@ -37,37 +37,38 @@ class App extends Component {
         let logosArray = logoData.map(logo => logo.data.url);
         // console.log(logosArray);
         this.setState({ logos: logosArray })
-        this.getLargestTrades();
       })
     })
   }
 
-  getLargestTrades = () => {
-    return new Promise(resolve => {
-      let trades = [];
-      this.state.symbols.forEach(symbol => trades.push(API.largestTrades(symbol)))
-      Promise.all(trades)
+  getLargestTrades = symbol => {
+    API.largestTrades(symbol)
       .then(tradesData => {
-        // There may be some problem with the API (largestTrades returns an empty array...)
-        // See api.png under the public folder
-        let tradesArray = tradesData.map(trade => trade.data);
-        console.log(tradesData);
-        // console.log(tradesArray);
-        this.setState({ largestTrades: tradesArray })
-        console.log(this.state.largestTrades);
-      })
-    })
+        // console.log(tradesData.data);
+        this.setState({ largestTrades: tradesData.data });
+        this.showHideTrades(symbol);
+      });
   }
 
-  showHideTrades = symbol => {
+  showHideTrades = (symbol) => {
+    // Check if any trades div is showing. If it is, hide it and modify the text of the button
+    const allTradeDivs = document.getElementsByClassName("card-trades");
+    for (let i = 0; i < allTradeDivs.length; i++) {
+      if (allTradeDivs[i].classList.contains("showing")) {
+        allTradeDivs[i].classList.toggle("no-show");
+        allTradeDivs[i].classList.toggle("showing");
+        allTradeDivs[i].previousSibling.innerHTML = "Show Largest Trades";
+      }
+    }    
+    
     // Show / Hide trades div
     const divTrades = document.getElementById(symbol+"-trades");
     divTrades.classList.toggle("no-show");
-
+    divTrades.classList.toggle("showing");
+    
     // Change the text content of the button and its "shown" attribute value
-    const getButton = document.getElementById(symbol+"-btn");
     const shownAttValue = document.getElementById(symbol+"-btn").getAttribute("data-show");
-
+    const getButton = document.getElementById(symbol+"-btn");
     if (shownAttValue === "false") {
       getButton.innerHTML = "Hide Largest Trades";
       getButton.setAttribute("data-show", "true")
@@ -76,18 +77,18 @@ class App extends Component {
       getButton.setAttribute("data-show", "false")
     }
   }
-  
+
   render() {
     return (
       <Fragment>
         <Header />
         {
-          this.state.logos.length > 1 && this.state.largestTrades.length > 1
+          this.state.logos.length > 1
           ? <Container list={this.state.list}
                        logos={this.state.logos}
+                       getLargestTrades={this.getLargestTrades}
+                       generateTrades={this.generateTrades}
                        largestTrades={this.state.largestTrades}
-                       symbols={this.state.symbols}
-                       showHideTrades={this.showHideTrades}
             />
           : null
         }

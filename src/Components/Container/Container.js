@@ -2,7 +2,7 @@ import React from 'react';
 import "./Container.css";
 import Card from "../Card";
 
-const Container = ({ list, logos, largestTrades, showHideTrades }) => {
+const Container = ({ list, logos, getLargestTrades, generateTrades, largestTrades}) => {
   return (
     <div className="container">
       {
@@ -10,8 +10,9 @@ const Container = ({ list, logos, largestTrades, showHideTrades }) => {
                                            key={company.symbol}
                                            company={company}
                                            logo={logos}
+                                           getLargestTrades={getLargestTrades}
+                                           generateTrades={generateTrades}
                                            largestTrades={largestTrades}
-                                           showHideTrades={showHideTrades}
                                      />
                 )
       }
