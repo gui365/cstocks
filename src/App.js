@@ -71,10 +71,12 @@ class App extends Component {
     const getButton = document.getElementById(symbol+"-btn");
     if (shownAttValue === "false") {
       getButton.innerHTML = "Hide Largest Trades";
-      getButton.setAttribute("data-show", "true")
+      getButton.setAttribute("data-show", "true");
     } else {
       getButton.innerHTML = "Show Largest Trades";
-      getButton.setAttribute("data-show", "false")
+      getButton.setAttribute("data-show", "false");
+      getButton.nextSibling.classList.toggle("no-show");
+      getButton.nextSibling.classList.toggle("showing");
     }
   }
 
