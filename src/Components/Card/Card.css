@@ -1,0 +1,45 @@
+.no-show {
+  display: none;
+}
+
+.company-logo {
+  height: 50px;
+  margin-right: 0.8rem;
+}
+
+.card {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 0.5rem;
+  border: solid 1px #eee;
+  border-radius: 5px;
+  padding: 0.8rem;
+}
+
+.card-title {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.show-hide-btn {
+  width: 80%;
+  margin-bottom: 1rem;
+  background-color: #2929ac;
+  color: #fff;
+  padding: 0.4rem;
+  border: none;
+}
+
+.card-trades {
+  width: 100%;
+  text-align: center;
+}
+
+.card-trades-title {
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
